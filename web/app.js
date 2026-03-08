@@ -20,8 +20,7 @@ function log(line) {
   logEl.textContent = `[${now}] ${line}\n` + logEl.textContent;
 }
 
-// Map
-const startCenter = [10.7769, 106.7009]; // HCMC default
+const startCenter = [10.7769, 106.7009];
 const map = L.map("map", { zoomControl: true }).setView(startCenter, 13);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -30,8 +29,8 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-const markers = new Map(); // id -> marker
-const layerGroups = {}; // layerName -> L.LayerGroup
+const markers = new Map();
+const layerGroups = {};
 const LAYER_LABELS = { road: "Đường", garbadge: "Bãi rác", bounds: "Ranh giới", "instruction-generated": "Hướng dẫn", building: "Công trình" };
 const LAYER_STYLES = {
   road: { color: "#78716c", weight: 3, fillColor: "transparent", fillOpacity: 0 },
@@ -143,9 +142,7 @@ function connectStream() {
     }
   });
 
-  es.addEventListener("ping", () => {
-    // ignore
-  });
+  es.addEventListener("ping", () => {});
 
   es.onerror = () => {
     setPill("bad", "Mất kết nối – tự reconnect…");
@@ -202,7 +199,6 @@ async function loadGeometryLayers() {
   }
 }
 
-// Initial fetch (so map isn't empty if SSE starts late)
 async function initialLoad() {
   await loadGeometryLayers();
   try {

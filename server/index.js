@@ -10,12 +10,11 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// 5 bảng geometry từ pgAdmin (UNION)
 const LAYER_TABLES = (process.env.GEOMETRY_LAYERS || "road,garbadge,bounds,instruction-generated,building")
   .split(",")
   .map((s) => s.trim().toLowerCase())
   .filter(Boolean);
-// Quote identifier an toàn cho PostgreSQL (hỗ trợ tên có gạch ngang như "instruction-generated")
+
 function quoteTable(name) {
   const n = name.replace(/\s+/g, "_");
   return /^[a-z0-9_]+$/.test(n) ? `public.${n}` : `public."${n}"`;
@@ -53,7 +52,6 @@ app.get("/api/points", async (req, res) => {
   }
 });
 
-// Server-Sent Events stream: pushes new points in near realtime.
 app.get("/api/stream", async (req, res) => {
   res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
   res.setHeader("Cache-Control", "no-cache, no-transform");
@@ -94,12 +92,10 @@ app.get("/api/stream", async (req, res) => {
   req.on("close", () => clearInterval(timer));
 });
 
-// Kiểm tra cấu hình geometry (debug)
 app.get("/api/geometry/status", (req, res) => {
   res.json({ ok: true, layers: LAYER_TABLES });
 });
 
-// API trả về geometry từ 5 bảng (UNION) - nhiều layout trên 1 bản đồ
 app.get("/api/geometry", async (req, res) => {
   if (LAYER_TABLES.length === 0) {
     return res.status(400).json({

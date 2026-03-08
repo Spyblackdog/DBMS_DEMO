@@ -1,4 +1,3 @@
--- Insert a few sample points around HCMC.
 insert into public.tracking_points (lat, lng, label)
 values
   (10.776900, 106.700900, 'Start'),

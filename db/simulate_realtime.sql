@@ -1,5 +1,3 @@
--- Run this in a SQL session to simulate realtime incoming points.
--- It appends a new row every ~1 second for 60 seconds.
 do $$
 declare
   i int;
