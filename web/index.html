@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Realtime Map (PostgreSQL)</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="title">
+          <div class="h1">Realtime Map</div>
+          <div class="sub">Nguồn: PostgreSQL → API → SSE</div>
+        </div>
+        <div class="status">
+          <div class="pill" id="connPill">Đang kết nối…</div>
+          <div class="meta">
+            <span>sinceId:</span> <span class="mono" id="sinceId">0</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="mapWrap">
+          <div id="map"></div>
+        </section>
+
+        <aside class="side">
+          <div class="card">
+            <div class="cardTitle">Điểm gần nhất</div>
+            <div class="kv">
+              <div class="k">ID</div>
+              <div class="v mono" id="lastId">-</div>
+              <div class="k">Label</div>
+              <div class="v" id="lastLabel">-</div>
+              <div class="k">Lat</div>
+              <div class="v mono" id="lastLat">-</div>
+              <div class="k">Lng</div>
+              <div class="v mono" id="lastLng">-</div>
+              <div class="k">Time</div>
+              <div class="v mono" id="lastTime">-</div>
+            </div>
+            <div class="row">
+              <label class="chk">
+                <input type="checkbox" id="follow" checked />
+                Tự bám theo điểm mới
+              </label>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="cardTitle">Layers (Layout)</div>
+            <div id="layerToggles" class="layerToggles"></div>
+          </div>
+
+          <div class="card">
+            <div class="cardTitle">Log</div>
+            <div class="log mono" id="log"></div>
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
+
